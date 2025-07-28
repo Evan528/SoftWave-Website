@@ -20,6 +20,7 @@
     a:hover {
       text-decoration: underline;
     }
+
     /* Navbar */
     nav {
       background: #004080;
@@ -28,17 +29,26 @@
       justify-content: space-between;
       align-items: center;
       padding: 0 2rem;
-      height: 60px;
+      height: 70px;
       flex-shrink: 0;
       position: sticky;
       top: 0;
       z-index: 1000;
     }
-    .nav-logo {
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .nav-logo img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+    }
+    .nav-title {
       font-weight: bold;
-      font-size: 1.3rem;
-      letter-spacing: 1px;
-      cursor: default;
+      font-size: 1.5rem;
+      letter-spacing: 0.5px;
     }
     .nav-links {
       display: flex;
@@ -46,10 +56,9 @@
       list-style: none;
     }
     .nav-links li {
-      display: inline-block;
       font-weight: 600;
-      cursor: pointer;
     }
+
     /* Hamburger */
     .hamburger {
       display: none;
@@ -63,14 +72,14 @@
       background: white;
       border-radius: 2px;
     }
-    /* Responsive */
+
     @media (max-width: 768px) {
       .nav-links {
         position: fixed;
-        top: 60px;
+        top: 70px;
         right: 0;
         background: #004080;
-        height: calc(100vh - 60px);
+        height: calc(100vh - 70px);
         width: 200px;
         flex-direction: column;
         padding: 1rem;
@@ -87,45 +96,65 @@
         display: flex;
       }
     }
-    /* Page layout */
+
+    /* Main layout */
     main {
       flex: 1;
       display: flex;
-      flex-direction: column; /* stack vertically */
+      flex-direction: column;
       padding: 2rem;
       gap: 2rem;
       box-sizing: border-box;
-      margin-top: 0;
     }
+
     .welcome {
-      font-size: 1.2rem;
-      color: #333;
-      /* natural height, no stretching */
+      text-align: center;
+      padding: 2rem;
+      background: white;
+      border-radius: 10px;
+      max-width: 800px;
+      margin: 0 auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
+    .welcome h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #004080;
+    }
+    .welcome p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #333;
+    }
+
     .bottom-row {
       display: flex;
       gap: 2rem;
-      /* optional fixed height, or let content decide */
-      /* height: 300px; */
+      flex-wrap: wrap;
+      justify-content: center;
     }
+
     .alerts {
-      width: 25%;
+      width: 280px;
       background: #e8f0fe;
       border-left: 5px solid #0059b3;
       padding: 1rem;
       box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      font-size: 0.9rem;
-      height: fit-content; /* don't stretch */
+      font-size: 0.95rem;
+      border-radius: 8px;
     }
+
     .schedule {
-      width: 70%;
+      flex: 1;
+      min-width: 300px;
+      max-width: 700px;
       background: white;
       padding: 1rem;
       box-shadow: 0 0 8px rgba(0,0,0,0.1);
       border-radius: 8px;
       overflow-x: auto;
-      height: fit-content; /* don't stretch */
     }
+
     table {
       border-collapse: collapse;
       width: 100%;
@@ -141,6 +170,7 @@
       background: #0059b3;
       color: white;
     }
+
     /* Tooltip */
     td[data-tooltip]:hover::after {
       content: attr(data-tooltip);
@@ -156,6 +186,7 @@
       z-index: 10;
       box-shadow: 0 0 6px rgba(0,0,0,0.2);
     }
+
     /* Modal styles */
     #modal {
       display: none;
@@ -182,6 +213,7 @@
       border-radius: 4px;
       cursor: pointer;
     }
+
     /* Overlay */
     #overlay {
       display: none;
@@ -191,6 +223,7 @@
       background: rgba(0,0,0,0.4);
       z-index: 90;
     }
+
     footer {
       background: #004080;
       color: white;
@@ -202,22 +235,28 @@
   </style>
 </head>
 <body>
+
+  <!-- Navbar -->
   <nav>
-    <div class="nav-logo">CampusConnect</div>
+    <div class="nav-left">
+      <div class="nav-logo">
+        <img src="logo.png" alt="Logo" />
+      </div>
+      <div class="nav-title">CampusConnect</div>
+    </div>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="timetable.html">Timetable</a></li>
-      <li><a href="discussion.html">Discussion</a></li>
-      <li><a href="resources.html">Resources</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="message.html">Message</a></li>
+      <li><a href="academicrecords.html">Academic Records</a></li>
+      <li><a href="download.html">Download</a></li>
+      <li><a href="upload.html">Upload</a></li>
+      <li><a href="booking.html">Booking</a></li>
       <li><a href="login.html">Login</a></li>
       <li><a href="register.html">Register</a></li>
     </ul>
     <div class="hamburger" id="hamburger">
-      <div></div>
-      <div></div>
-      <div></div>
+      <div></div><div></div><div></div>
     </div>
   </nav>
 
@@ -227,6 +266,7 @@
       <p>Your one-stop portal for all things campus — from schedules and discussions to resources and contacts.</p>
       <p>Stay connected, stay informed, and make the most of your time at CTU.</p>
     </div>
+
     <div class="bottom-row">
       <div class="alerts">
         <h3>Alerts</h3>
@@ -258,14 +298,13 @@
               <td data-tooltip="Room 303, Ms. Doe" data-info="Course: CS Fundamentals\nRoom: 303\nLecturer: Ms. Doe\nDescription: Intro to Programming Concepts.">CS Fundamentals</td>
               <td data-tooltip="Lab 1, Mr. Evans" data-info="Course: Lab Session\nRoom: Lab 1\nLecturer: Mr. Evans\nDescription: Practical lab exercises.">Lab Session</td>
             </tr>
-            <!-- Add more rows as needed -->
           </tbody>
         </table>
       </div>
     </div>
   </main>
 
-  <!-- Modal and Overlay -->
+  <!-- Modal & Overlay -->
   <div id="overlay"></div>
   <div id="modal">
     <h3 id="modal-title"></h3>
@@ -276,15 +315,14 @@
   <footer>© 2025 CampusConnect | City Technical University</footer>
 
   <script>
-    // Hamburger menu toggle
+    // Hamburger toggle
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.querySelector('.nav-links');
-
     hamburger.addEventListener('click', () => {
       navLinks.classList.toggle('active');
     });
 
-    // Modal logic
+    // Timetable modal
     const modal = document.getElementById('modal');
     const overlay = document.getElementById('overlay');
     const modalTitle = document.getElementById('modal-title');

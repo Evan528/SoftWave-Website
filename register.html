@@ -4,28 +4,134 @@
   <meta charset="UTF-8" />
   <title>CampusConnect - Register</title>
   <style>
+    /* ====== Base ====== */
     body {
       font-family: Arial, sans-serif;
       background: #e1e9f8;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
     }
+
+    a {
+      text-decoration: none;
+      color: white;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* ====== Navbar ====== */
+    nav {
+      background: #004080;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      height: 70px;
+      width: 100%;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-logo img {
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+    }
+
+    .nav-title {
+      font-weight: bold;
+      font-size: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links li {
+      font-weight: 600;
+    }
+
+    .nav-links a {
+      color: white;
+    }
+
+    /* ====== Hamburger (Mobile) ====== */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 70px;
+        right: 0;
+        background: #004080;
+        height: calc(100vh - 70px);
+        width: 200px;
+        flex-direction: column;
+        padding: 1rem;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+      }
+
+      .nav-links.active {
+        transform: translateX(0);
+      }
+
+      .nav-links li {
+        margin-bottom: 1rem;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* ====== Register Form ====== */
     .register-container {
       background: white;
       padding: 2rem 3rem;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       width: 360px;
+      margin-top: 5rem;
       text-align: center;
     }
-    h2 {
+
+    .register-container h2 {
       color: #004080;
       margin-bottom: 1.5rem;
     }
-    input[type="text"], input[type="email"], input[type="password"], input[type="password"] {
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
       width: 100%;
       padding: 0.75rem;
       margin: 0.5rem 0 1rem 0;
@@ -33,6 +139,7 @@
       border-radius: 4px;
       font-size: 1rem;
     }
+
     button {
       width: 100%;
       background: #004080;
@@ -45,24 +152,56 @@
       font-weight: bold;
       transition: background 0.3s ease;
     }
+
     button:hover {
       background: #003366;
     }
+
     .login-link {
       margin-top: 1rem;
       font-size: 0.9rem;
     }
+
     .login-link a {
       color: #004080;
-      text-decoration: none;
       font-weight: bold;
     }
+
     .login-link a:hover {
       text-decoration: underline;
     }
   </style>
 </head>
+
 <body>
+
+  <!-- ====== Navigation Bar ====== -->
+  <nav>
+    <div class="nav-left">
+      <div class="nav-logo">
+        <img src="logo.png" alt="Logo" />
+      </div>
+      <div class="nav-title">CampusConnect</div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="timetable.html">Timetable</a></li>
+      <li><a href="message.html">Message</a></li>
+      <li><a href="academicrecords.html">Academic Records</a></li>
+      <li><a href="download.html">Download</a></li>
+      <li><a href="upload.html">Upload</a></li>
+      <li><a href="booking.html">Booking</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="register.html">Register</a></li>
+    </ul>
+
+    <div class="hamburger" id="hamburger">
+      <div></div><div></div><div></div>
+    </div>
+  </nav>
+
+  <!-- ====== Register Form ====== -->
   <div class="register-container">
     <h2>Register</h2>
     <form>
@@ -72,9 +211,21 @@
       <input type="password" placeholder="Confirm Password" required />
       <button type="submit">Create Account</button>
     </form>
+
     <div class="login-link">
       Already have an account? <a href="login.html">Login here</a>
     </div>
   </div>
+
+  <!-- ====== JavaScript (Hamburger Toggle) ====== -->
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  </script>
+
 </body>
 </html>
