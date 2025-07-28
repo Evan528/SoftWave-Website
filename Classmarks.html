@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CampusConnect - Manage Student Marks</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      flex-direction: column;
+    }
+    /* Navbar */
+    .navbar {
+      background: #003366;
+      color: white;
+      padding: 15px 0;
+    }
+    .navbar .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 90%;
+      margin: auto;
+    }
+    .navbar h1 { font-size: 24px; }
+    .navbar nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+    .navbar nav a:hover { color: #ffcc00; }
+
+    /* Page container */
+    .container {
+      width: 90%;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      flex: 1; /* Push footer down */
+    }
+    h2 { color: #003366; margin-bottom: 15px; }
+
+    /* Search box */
+    .search-box {
+      margin-bottom: 20px;
+      text-align: right;
+    }
+    .search-box input {
+      padding: 8px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    /* Table styling */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background: #003366;
+      color: white;
+      cursor: pointer;
+      position: relative;
+    }
+    th:hover { background: #004080; }
+    th.sortable::after {
+      content: '⇅';
+      font-size: 14px;
+      position: absolute;
+      right: 8px;
+      color: #ddd;
+    }
+    th.sorted-asc::after { content: '▲'; color: #fff; }
+    th.sorted-desc::after { content: '▼'; color: #fff; }
+    tr:hover { background: #f1f1f1; }
+    td[contenteditable="true"] { background: #fff8e1; }
+
+    /* Save button */
+    .save-btn {
+      margin-top: 20px;
+      background: #003366;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .save-btn:hover { background: #0055aa; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #003366;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <h1>CampusConnect</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="marks.html">Manage Marks</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div class="container">
+    <h2>Manage Student Marks</h2>
+    <div class="search-box">
+      <input type="text" id="search" placeholder="Search by student name..." onkeyup="searchTable()">
+    </div>
+    <table id="marksTable">
+        <thead>
+            <tr>
+                <th class="sortable" onclick="sortTable(0)">Student ID</th>
+                <th class="sortable" onclick="sortTable(1)">Name</th>
+                <th>Course</th>
+                <th class="sortable" onclick="sortTable(3)">Assignment</th>
+                <th class="sortable" onclick="sortTable(4)">Exam</th>
+                <th>Final Grade</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>2023001</td>
+                <td>Amy Johnson</td>
+                <td>Computer Science</td>
+                <td contenteditable="true">78%</td>
+                <td contenteditable="true">85%</td>
+                <td contenteditable="true">B+</td>
+            </tr>
+            <tr>
+                <td>2023002</td>
+                <td>Brian Smith</td>
+                <td>Information Systems</td>
+                <td contenteditable="true">82%</td>
+                <td contenteditable="true">90%</td>
+                <td contenteditable="true">A</td>
+            </tr>
+            <tr>
+                <td>2023003</td>
+                <td>Chloe Williams</td>
+                <td>Computer Science</td>
+                <td contenteditable="true">68%</td>
+                <td contenteditable="true">75%</td>
+                <td contenteditable="true">C+</td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="save-btn" onclick="saveChanges()">Save Changes</button>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 CampusConnect. All rights reserved.</p>
+  </footer>
+
+<script>
+    // Search filter
+    function searchTable() {
+        let input = document.getElementById("search").value.toLowerCase();
+        let rows = document.querySelectorAll("#marksTable tbody tr");
+        rows.forEach(row => {
+            let name = row.cells[1].textContent.toLowerCase();
+            row.style.display = name.includes(input) ? "" : "none";
+        });
+    }
+
+    // Sort table columns
+    let sortDirection = true;
+    let lastSortedCol = -1;
+
+    function sortTable(columnIndex) {
+        const table = document.getElementById("marksTable");
+        let rows = Array.from(table.rows).slice(1);
+        rows.sort((a, b) => {
+            let aText = a.cells[columnIndex].textContent.trim().replace('%','');
+            let bText = b.cells[columnIndex].textContent.trim().replace('%','');
+            if (!isNaN(aText) && !isNaN(bText)) {
+                return sortDirection ? aText - bText : bText - aText;
+            } else {
+                return sortDirection 
+                    ? aText.localeCompare(bText) 
+                    : bText.localeCompare(aText);
+            }
+        });
+        sortDirection = (lastSortedCol === columnIndex) ? !sortDirection : true;
+        lastSortedCol = columnIndex;
+        document.querySelectorAll("th").forEach(th => th.classList.remove("sorted-asc", "sorted-desc"));
+        document.querySelectorAll("th")[columnIndex].classList.add(sortDirection ? "sorted-asc" : "sorted-desc");
+        rows.forEach(row => table.tBodies[0].appendChild(row));
+    }
+
+    // Save changes
+    function saveChanges() {
+        let table = document.getElementById("marksTable");
+        let data = [];
+        for (let i = 1; i < table.rows.length; i++) {
+            let row = table.rows[i];
+            data.push({
+                id: row.cells[0].textContent,
+                name: row.cells[1].textContent,
+                course: row.cells[2].textContent,
+                assignment: row.cells[3].textContent,
+                exam: row.cells[4].textContent,
+                grade: row.cells[5].textContent
+            });
+        }
+        alert("Changes saved!\n\n" + JSON.stringify(data, null, 2));
+    }
+</script>
+</body>
+</html>
