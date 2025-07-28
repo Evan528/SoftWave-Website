@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CampusConnect - Messages</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    body, html {
+      height: 100%;
+      background: #f4f6f9;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    /* Navbar */
+    .navbar {
+      background: #003366;
+      color: white;
+      padding: 15px 0;
+      flex-shrink: 0;
+    }
+    .navbar .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 90%;
+      margin: auto;
+    }
+    .navbar h1 {
+      font-size: 24px;
+    }
+    .navbar nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+    .navbar nav a:hover {
+      color: #ffcc00;
+    }
+
+    /* Page container */
+    .container {
+      flex: 1;
+      display: flex;
+      width: 90%;
+      margin: 20px auto 40px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      min-height: 500px;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 250px;
+      background: #003366;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid #002244;
+    }
+    .tab {
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      background: #004080;
+      transition: background-color 0.3s;
+      user-select: none;
+    }
+    .tab.active {
+      background: #ffcc00;
+      color: #003366;
+      font-weight: bold;
+    }
+    .search-container {
+      padding: 10px 15px;
+      border-bottom: 1px solid #002244;
+      background: #004080;
+    }
+    .search-container input {
+      width: 100%;
+      padding: 7px 10px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: none;
+      outline: none;
+    }
+    .user-list {
+      flex: 1;
+      overflow-y: auto;
+    }
+    .user {
+      padding: 12px 15px;
+      border-bottom: 1px solid #002244;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .user:hover, .user.selected {
+      background: #ffcc00;
+      color: #003366;
+      font-weight: bold;
+    }
+
+    /* Chat area */
+    .chat-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-header {
+      background: #003366;
+      color: white;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background: #e9eff7;
+    }
+    .message {
+      margin-bottom: 12px;
+      max-width: 70%;
+      padding: 10px 15px;
+      border-radius: 20px;
+      clear: both;
+      word-wrap: break-word;
+    }
+    .message.sent {
+      background: #003366;
+      color: white;
+      float: right;
+      border-bottom-right-radius: 0;
+    }
+    .message.received {
+      background: #fff;
+      color: #333;
+      float: left;
+      border-bottom-left-radius: 0;
+      border: 1px solid #ccc;
+    }
+
+    /* Message input */
+    .chat-input {
+      padding: 10px 15px;
+      border-top: 1px solid #ccc;
+      background: white;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .chat-input textarea {
+      flex: 1;
+      resize: none;
+      padding: 8px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      height: 50px;
+      outline: none;
+    }
+    .chat-input button {
+      background: #003366;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    .chat-input button:hover:enabled {
+      background: #0055aa;
+    }
+    .chat-input button:disabled {
+      background: #777;
+      cursor: default;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #003366;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    /* Scrollbar for user list and messages */
+    .user-list::-webkit-scrollbar,
+    .chat-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+    .user-list::-webkit-scrollbar-thumb,
+    .chat-messages::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="nav-container">
+      <h1>CampusConnect</h1>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="marks.html">Manage Marks</a>
+        <a href="booking.html">Booking</a>
+        <a href="messages.html">Messages</a>
+        <a href="login.html">Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="tabs">
+        <div class="tab active" id="tab-students" onclick="switchTab('students')">Students</div>
+        <div class="tab" id="tab-lecturers" onclick="switchTab('lecturers')">Lecturers</div>
+      </div>
+      <div class="search-container">
+        <input type="text" id="search-input" placeholder="Search..." oninput="filterUsers()">
+      </div>
+      <div class="user-list" id="user-list">
+        <!-- Users will be loaded here -->
+      </div>
+    </div>
+
+    <!-- Chat Area -->
+    <div class="chat-area">
+      <div class="chat-header" id="chat-header">Select a student to start chatting</div>
+      <div class="chat-messages" id="chat-messages"></div>
+      <div class="chat-input">
+        <textarea id="message-input" placeholder="Type your message..." disabled></textarea>
+        <button id="send-btn" onclick="sendMessage()" disabled>Send</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 CampusConnect. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const usersData = {
+      students: [
+        { id: 1, name: "Amy Johnson" },
+        { id: 2, name: "Brian Smith" },
+        { id: 3, name: "Chloe Williams" },
+      ],
+      lecturers: [
+        { id: 101, name: "Dr. Landau Dubé" },
+        { id: 102, name: "Prof. Josephine" },
+        { id: 103, name: "Mr. Smith" },
+      ]
+    };
+
+    const chatHistory = {
+      "students_1": [
+        { sender: "them", text: "Hi, I have a question about my marks." },
+        { sender: "me", text: "Sure, how can I help you?" }
+      ],
+      "lecturers_101": [
+        { sender: "them", text: "Please remember to submit your assignment." },
+        { sender: "me", text: "Thanks for the reminder!" }
+      ]
+    };
+
+    let currentTab = 'students';
+    let selectedUserId = null;
+    let filteredUsers = [];
+
+    const userListElem = document.getElementById('user-list');
+    const chatHeader = document.getElementById('chat-header');
+    const chatMessages = document.getElementById('chat-messages');
+    const messageInput = document.getElementById('message-input');
+    const sendBtn = document.getElementById('send-btn');
+    const searchInput = document.getElementById('search-input');
+
+    // Load users on tab switch
+    function switchTab(tab) {
+      if (tab === currentTab) return;
+      currentTab = tab;
+
+      document.getElementById('tab-students').classList.toggle('active', tab === 'students');
+      document.getElementById('tab-lecturers').classList.toggle('active', tab === 'lecturers');
+
+      selectedUserId = null;
+      chatHeader.textContent = `Select a ${tab.slice(0, -1)} to start chatting`;
+      chatMessages.innerHTML = '';
+      messageInput.value = '';
+      messageInput.disabled = true;
+      sendBtn.disabled = true;
+
+      searchInput.value = '';
+      loadUsers();
+    }
+
+    // Load users and reset filter
+    function loadUsers() {
+      filteredUsers = usersData[currentTab];
+      renderUsers();
+    }
+
+    // Render filtered users list
+    function renderUsers() {
+      userListElem.innerHTML = '';
+      filteredUsers.forEach(user => {
+        const userDiv = document.createElement('div');
+        userDiv.classList.add('user');
+        userDiv.textContent = user.name;
+        userDiv.dataset.id = user.id;
+        userDiv.onclick = () => selectUser(user.id, user.name, userDiv);
+        userListElem.appendChild(userDiv);
+      });
+    }
+
+    // Filter users on search input
+    function filterUsers() {
+      const query = searchInput.value.trim().toLowerCase();
+      filteredUsers = usersData[currentTab].filter(user => user.name.toLowerCase().includes(query));
+      renderUsers();
+    }
+
+    // Select a user to chat with
+    function selectUser(id, name, userDiv) {
+      selectedUserId = id;
+      // Remove previous selection highlight
+      [...userListElem.children].forEach(el => el.classList.remove('selected'));
+      // Highlight current user
+      userDiv.classList.add('selected');
+
+      chatHeader.textContent = `Chat with ${name}`;
+      loadMessages();
+      messageInput.disabled = false;
+      sendBtn.disabled = false;
+      messageInput.focus();
+    }
+
+    // Load chat messages for selected user
+    function loadMessages() {
+      chatMessages.innerHTML = '';
+      const key = `${currentTab}_${selectedUserId}`;
+      const messages = chatHistory[key] || [];
+      messages.forEach(msg => {
+        const div = document.createElement('div');
+        div.classList.add('message', msg.sender === 'me' ? 'sent' : 'received');
+        div.textContent = msg.text;
+        chatMessages.appendChild(div);
+      });
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Send a message
+    function sendMessage() {
+      const text = messageInput.value.trim();
+      if (!text) return;
+
+      const key = `${currentTab}_${selectedUserId}`;
+      if (!chatHistory[key]) chatHistory[key] = [];
+
+      chatHistory[key].push({ sender: 'me', text });
+      loadMessages();
+
+      // Simulate reply
+      setTimeout(() => {
+        chatHistory[key].push({ sender: 'them', text: "Got your message!" });
+        loadMessages();
+      }, 1000);
+
+      messageInput.value = '';
+      messageInput.focus();
+    }
+
+    // Initial load
+    loadUsers();
+  </script>
+</body>
+</html>
