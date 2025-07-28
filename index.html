@@ -2,43 +2,313 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CampusConnect</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>CampusConnect - Home</title>
+  <style>
+    /* Reset & base */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f4f6f8;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    a {
+      text-decoration: none;
+      color: white;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    /* Navbar */
+    nav {
+      background: #004080;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      height: 60px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .nav-logo {
+      font-weight: bold;
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+      cursor: default;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .nav-links li {
+      display: inline-block;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 60px;
+        right: 0;
+        background: #004080;
+        height: calc(100vh - 60px);
+        width: 200px;
+        flex-direction: column;
+        padding: 1rem;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+      }
+      .nav-links.active {
+        transform: translateX(0);
+      }
+      .nav-links li {
+        margin-bottom: 1rem;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+    /* Page layout */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column; /* stack vertically */
+      padding: 2rem;
+      gap: 2rem;
+      box-sizing: border-box;
+      margin-top: 0;
+    }
+    .welcome {
+      font-size: 1.2rem;
+      color: #333;
+      /* natural height, no stretching */
+    }
+    .bottom-row {
+      display: flex;
+      gap: 2rem;
+      /* optional fixed height, or let content decide */
+      /* height: 300px; */
+    }
+    .alerts {
+      width: 25%;
+      background: #e8f0fe;
+      border-left: 5px solid #0059b3;
+      padding: 1rem;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      font-size: 0.9rem;
+      height: fit-content; /* don't stretch */
+    }
+    .schedule {
+      width: 70%;
+      background: white;
+      padding: 1rem;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      overflow-x: auto;
+      height: fit-content; /* don't stretch */
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+    }
+    th {
+      background: #0059b3;
+      color: white;
+    }
+    /* Tooltip */
+    td[data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: 50%;
+      bottom: 110%;
+      transform: translateX(-50%);
+      background: #004080;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 5px;
+      white-space: nowrap;
+      z-index: 10;
+      box-shadow: 0 0 6px rgba(0,0,0,0.2);
+    }
+    /* Modal styles */
+    #modal {
+      display: none;
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      border-radius: 8px;
+      padding: 2rem;
+      width: 300px;
+      z-index: 100;
+    }
+    #modal h3 {
+      margin-top: 0;
+      color: #004080;
+    }
+    #modal button {
+      margin-top: 1.5rem;
+      background: #004080;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    /* Overlay */
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.4);
+      z-index: 90;
+    }
+    footer {
+      background: #004080;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+  </style>
 </head>
 <body>
-  <header class="navbar">
-    <div class="container">
-      <h1>CampusConnect</h1>
-      <nav>
-        <a href="login.html">Login</a>
-        <a href="register.html">Register</a>
-      </nav>
+  <nav>
+    <div class="nav-logo">CampusConnect</div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="timetable.html">Timetable</a></li>
+      <li><a href="discussion.html">Discussion</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="register.html">Register</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
     </div>
-  </header>
+  </nav>
 
-  <section class="hero">
-    <h2>Welcome to CampusConnect</h2>
-    <p>Your digital bridge between students and lecturers.</p>
-  </section>
-
-  <section class="main-content">
-    <div class="alerts">
-      <h3>Important Alerts</h3>
-      <ul>
-        <li>📢 Midterm results will be uploaded by Friday.</li>
-        <li>📅 Study center closed on public holidays.</li>
-        <li>🛠 System maintenance scheduled for Sunday 10 PM.</li>
-      </ul>
+  <main>
+    <div class="welcome">
+      <h2>Welcome to CampusConnect!</h2>
+      <p>Your one-stop portal for all things campus — from schedules and discussions to resources and contacts.</p>
+      <p>Stay connected, stay informed, and make the most of your time at CTU.</p>
     </div>
-    <div class="schedule">
-      <h3>Current Schedule</h3>
-      <img src="schedule-placeholder.jpg" alt="Current Schedule" />
+    <div class="bottom-row">
+      <div class="alerts">
+        <h3>Alerts</h3>
+        <ul>
+          <li>Exam registration deadline approaching.</li>
+          <li>New timetable released for next semester.</li>
+          <li>Library closed on Friday.</li>
+        </ul>
+      </div>
+      <div class="schedule">
+        <h3>Current Timetable</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>08:00 - 09:00</td>
+              <td data-tooltip="Room 101, Prof. Adams" data-info="Course: Math 101\nRoom: 101\nLecturer: Prof. Adams\nDescription: Basic Algebra and Functions.">Math 101</td>
+              <td data-tooltip="Room 202, Prof. Baker" data-info="Course: Physics 201\nRoom: 202\nLecturer: Prof. Baker\nDescription: Mechanics and Thermodynamics.">Physics 201</td>
+              <td data-tooltip="Room 105, Dr. Clark" data-info="Course: English 101\nRoom: 105\nLecturer: Dr. Clark\nDescription: Composition and Literature.">English 101</td>
+              <td data-tooltip="Room 303, Ms. Doe" data-info="Course: CS Fundamentals\nRoom: 303\nLecturer: Ms. Doe\nDescription: Intro to Programming Concepts.">CS Fundamentals</td>
+              <td data-tooltip="Lab 1, Mr. Evans" data-info="Course: Lab Session\nRoom: Lab 1\nLecturer: Mr. Evans\nDescription: Practical lab exercises.">Lab Session</td>
+            </tr>
+            <!-- Add more rows as needed -->
+          </tbody>
+        </table>
+      </div>
     </div>
-  </section>
+  </main>
 
-  <footer>
-    <p>&copy; 2025 CampusConnect. All rights reserved.</p>
-  </footer>
+  <!-- Modal and Overlay -->
+  <div id="overlay"></div>
+  <div id="modal">
+    <h3 id="modal-title"></h3>
+    <pre id="modal-content" style="white-space: pre-wrap;"></pre>
+    <button id="close-btn">Close</button>
+  </div>
+
+  <footer>© 2025 CampusConnect | City Technical University</footer>
+
+  <script>
+    // Hamburger menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+    // Modal logic
+    const modal = document.getElementById('modal');
+    const overlay = document.getElementById('overlay');
+    const modalTitle = document.getElementById('modal-title');
+    const modalContent = document.getElementById('modal-content');
+    const closeBtn = document.getElementById('close-btn');
+
+    document.querySelectorAll('td[data-info]').forEach(cell => {
+      cell.addEventListener('click', () => {
+        modalTitle.textContent = cell.textContent;
+        modalContent.textContent = cell.getAttribute('data-info').replace(/\\n/g, '\n');
+        modal.style.display = 'block';
+        overlay.style.display = 'block';
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+      overlay.style.display = 'none';
+    });
+
+    overlay.addEventListener('click', () => {
+      modal.style.display = 'none';
+      overlay.style.display = 'none';
+    });
+  </script>
 </body>
 </html>
