@@ -5,132 +5,161 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CampusConnect - Manage Student Marks</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      height: 100%;
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
-      display: flex;
-      flex-direction: column;
-    }
-    /* Navbar */
-    .navbar {
-      background: #003366;
-      color: white;
-      padding: 15px 0;
-    }
-    .navbar .nav-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 90%;
-      margin: auto;
-    }
-    .navbar h1 { font-size: 24px; }
-    .navbar nav a {
-      color: white;
-      text-decoration: none;
-      margin-left: 20px;
-      font-size: 16px;
-      transition: color 0.3s;
-    }
-    .navbar nav a:hover { text-decoration: underline; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    display: flex;
+    flex-direction: column;
+  }
+  /* Navbar */
+  nav {
+    background: #004080;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    height: 70px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .nav-logo img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+  }
+  .nav-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+  .nav-links li {
+    font-weight: 600;
+  }
 
-    /* Page container */
-    .container {
-      width: 90%;
-      margin: 30px auto;
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      flex: 1; /* Push footer down */
-    }
-    h2 { color: #003366; margin-bottom: 15px; }
+  /* ✅ Added to fix link color */
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+  }
 
-    /* Search box */
-    .search-box {
-      margin-bottom: 20px;
-      text-align: right;
-    }
-    .search-box input {
-      padding: 8px;
-      width: 250px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
+  .nav-links a:hover {
+    text-decoration: underline;
+  }
 
-    /* Table styling */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-    th, td {
-      padding: 10px;
-      text-align: center;
-      border-bottom: 1px solid #ddd;
-    }
-    th {
-      background: #003366;
-      color: white;
-      cursor: pointer;
-      position: relative;
-    }
-    th:hover { background: #004080; }
-    th.sortable::after {
-      content: '⇅';
-      font-size: 14px;
-      position: absolute;
-      right: 8px;
-      color: #ddd;
-    }
-    th.sorted-asc::after { content: '▲'; color: #fff; }
-    th.sorted-desc::after { content: '▼'; color: #fff; }
-    tr:hover { background: #f1f1f1; }
-    td[contenteditable="true"] { background: #fff8e1; }
+  /* Page container */
+  .container {
+    width: 90%;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    flex: 1; /* Push footer down */
+  }
+  h2 { color: #003366; margin-bottom: 15px; }
 
-    /* Save button */
-    .save-btn {
-      margin-top: 20px;
-      background: #003366;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .save-btn:hover { background: #0055aa; }
+  /* Search box */
+  .search-box {
+    margin-bottom: 20px;
+    text-align: right;
+  }
+  .search-box input {
+    padding: 8px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
 
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 15px;
-      background: #003366;
-      color: white;
-    }
-  </style>
+  /* Table styling */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+  }
+  th, td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  th {
+    background: #003366;
+    color: white;
+    cursor: pointer;
+    position: relative;
+  }
+  th:hover { background: #004080; }
+  th.sortable::after {
+    content: '⇅';
+    font-size: 14px;
+    position: absolute;
+    right: 8px;
+    color: #ddd;
+  }
+  th.sorted-asc::after { content: '▲'; color: #fff; }
+  th.sorted-desc::after { content: '▼'; color: #fff; }
+  tr:hover { background: #f1f1f1; }
+  td[contenteditable="true"] { background: #fff8e1; }
+
+  /* Save button */
+  .save-btn {
+    margin-top: 20px;
+    background: #003366;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .save-btn:hover { background: #0055aa; }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 15px;
+    background: #003366;
+    color: white;
+  }
+</style>
+
 </head>
 <body>
   <!-- Navbar -->
-  <header class="navbar">
-    <div class="nav-container">
-      <h1>CampusConnect</h1>
-      <nav>
-        <b>
-      <a href="index.html">Home</a>
-      <a href="timetable.html">Timetable</a>
-      <a href="message.html">Message</a></li>
-      <a href="academicrecords.html">Academic Records</a>
-      <a href="resources.html">Resources</a>
-      <a href="booking.html">Booking</a>
-      <a href="ticket.html">Log Ticket</a>
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
-          </b>
-      </nav>
+  <nav>
+    <div class="nav-left">
+      <div class="nav-logo">
+        <img src="logo.png" alt="Logo" />
+      </div>
+      <div class="nav-title">CampusConnect</div>
     </div>
-  </header>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="message.html">Message</a></li>
+      <li><a href="academicrecords.html">Academic Records</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="booking.html">Booking</a></li>
+      <li><a href="ticket.html">Log Ticket</a></li>
+      <li><a href="login.html">Login</a></li>
+      <li><a href="register.html">Register</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger">
+      <div></div><div></div><div></div>
+    </div>
+  </nav>
 
   <!-- Content -->
   <div class="container">
