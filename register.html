@@ -2,29 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CampusConnect - Register</title>
   <style>
-    /* ====== Base ====== */
+    /* ===== Base ===== */
     body {
       font-family: Arial, sans-serif;
       background: #e1e9f8;
       margin: 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
       min-height: 100vh;
+      align-items: center;
     }
 
-    a {
-      text-decoration: none;
-      color: white;
-    }
+    a { text-decoration: none; color: white; }
+    a:hover { text-decoration: underline; }
 
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* ====== Navbar ====== */
+    /* ===== Navbar ===== */
     nav {
       background: #004080;
       color: white;
@@ -38,54 +33,16 @@
       top: 0;
       z-index: 1000;
     }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .nav-logo img { height: 40px; width: 40px; border-radius: 50%; }
+    .nav-title { font-weight: bold; font-size: 1.5rem; letter-spacing: 0.5px; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links li { font-weight: 600; }
+    .nav-links a { color: white; }
 
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .nav-logo img {
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-    }
-
-    .nav-title {
-      font-weight: bold;
-      font-size: 1.5rem;
-      letter-spacing: 0.5px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-    }
-
-    .nav-links li {
-      font-weight: 600;
-    }
-
-    .nav-links a {
-      color: white;
-    }
-
-    /* ====== Hamburger (Mobile) ====== */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-    }
-
-    .hamburger div {
-      width: 25px;
-      height: 3px;
-      background: white;
-      border-radius: 2px;
-    }
-
+    /* ===== Hamburger (Mobile) ===== */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger div { width: 25px; height: 3px; background: white; border-radius: 2px; }
     @media (max-width: 768px) {
       .nav-links {
         position: fixed;
@@ -99,21 +56,12 @@
         transform: translateX(100%);
         transition: transform 0.3s ease;
       }
-
-      .nav-links.active {
-        transform: translateX(0);
-      }
-
-      .nav-links li {
-        margin-bottom: 1rem;
-      }
-
-      .hamburger {
-        display: flex;
-      }
+      .nav-links.active { transform: translateX(0); }
+      .nav-links li { margin-bottom: 1rem; }
+      .hamburger { display: flex; }
     }
 
-    /* ====== Register Form ====== */
+    /* ===== Register Form ===== */
     .register-container {
       background: white;
       padding: 2rem 3rem;
@@ -123,15 +71,8 @@
       margin-top: 5rem;
       text-align: center;
     }
-
-    .register-container h2 {
-      color: #004080;
-      margin-bottom: 1.5rem;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"] {
+    .register-container h2 { color: #004080; margin-bottom: 1.5rem; }
+    input[type="text"], input[type="email"], input[type="password"] {
       width: 100%;
       padding: 0.75rem;
       margin: 0.5rem 0 1rem 0;
@@ -139,7 +80,6 @@
       border-radius: 4px;
       font-size: 1rem;
     }
-
     button {
       width: 100%;
       background: #004080;
@@ -152,35 +92,29 @@
       font-weight: bold;
       transition: background 0.3s ease;
     }
+    button:hover { background: #003366; }
+    .login-link { margin-top: 1rem; font-size: 0.9rem; }
+    .login-link a { color: #004080; font-weight: bold; }
+    .login-link a:hover { text-decoration: underline; }
 
-    button:hover {
+    /* ===== Footer ===== */
+    footer {
+      text-align: center;
+      padding: 15px;
       background: #003366;
-    }
-
-    .login-link {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-    }
-
-    .login-link a {
-      color: #004080;
-      font-weight: bold;
-    }
-
-    .login-link a:hover {
-      text-decoration: underline;
+      color: white;
+      margin-top: auto;
+      width: 100%;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- ====== Navigation Bar ====== -->
-    <nav>
+  <!-- ===== Navigation Bar ===== -->
+  <nav>
     <div class="nav-left">
-      <div class="nav-logo">
-        <img src="logo.png" alt="Logo" />
-      </div>
+      <div class="nav-logo"><img src="logo.png" alt="Logo" /></div>
       <div class="nav-title">CampusConnect</div>
     </div>
     <ul class="nav-links">
@@ -193,36 +127,44 @@
       <li><a href="login.html">Login</a></li>
       <li><a href="register.html">Register</a></li>
     </ul>
-    <div class="hamburger" id="hamburger">
-      <div></div><div></div><div></div>
-    </div>
+    <div class="hamburger" id="hamburger"><div></div><div></div><div></div></div>
   </nav>
 
-  <!-- ====== Register Form ====== -->
+  <!-- ===== Register Form ===== -->
   <div class="register-container">
     <h2>Register</h2>
-    <form>
-      <input type="text" placeholder="Full Name" required />
-      <input type="email" placeholder="Email address" required />
-      <input type="password" placeholder="Password" required />
-      <input type="password" placeholder="Confirm Password" required />
+    <form id="register-form">
+      <input type="text" id="fullname" placeholder="Full Name" required />
+      <input type="email" id="email" placeholder="Email address" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <input type="password" id="confirm-password" placeholder="Confirm Password" required />
       <button type="submit">Create Account</button>
     </form>
-
     <div class="login-link">
       Already have an account? <a href="login.html">Login here</a>
     </div>
   </div>
 
-  <!-- ====== JavaScript (Hamburger Toggle) ====== -->
+  <!-- ===== Footer ===== -->
+  <footer>
+    <p>&copy; 2025 CampusConnect. All rights reserved.</p>
+  </footer>
+
+  <!-- ===== JS ===== -->
   <script>
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
 
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
+    // Simple password match check
+    document.getElementById('register-form').addEventListener('submit', function(e) {
+      const pass = document.getElementById('password').value;
+      const confirm = document.getElementById('confirm-password').value;
+      if (pass !== confirm) {
+        e.preventDefault();
+        alert('Passwords do not match!');
+      }
     });
   </script>
-
 </body>
 </html>
