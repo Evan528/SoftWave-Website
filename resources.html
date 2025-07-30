@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CampusConnect - Resources</title>
   <style>
     /* ====== Base Layout ====== */
@@ -9,16 +10,13 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f4f6fa;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
-    a {
-      color: white;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
+    a { color: white; text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
     /* ====== Navbar ====== */
     nav {
@@ -29,50 +27,19 @@
       align-items: center;
       padding: 0 2rem;
       height: 70px;
-      flex-shrink: 0;
       position: sticky;
       top: 0;
       z-index: 1000;
     }
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .nav-logo img {
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-    }
-    .nav-title {
-      font-weight: bold;
-      font-size: 1.5rem;
-      letter-spacing: 0.5px;
-    }
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-    }
-    .nav-links li {
-      font-weight: 600;
-    }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .nav-logo img { height: 40px; width: 40px; border-radius: 50%; }
+    .nav-title { font-weight: bold; font-size: 1.5rem; letter-spacing: 0.5px; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links li { font-weight: 600; }
 
     /* ====== Hamburger (Mobile) ====== */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-    }
-
-    .hamburger div {
-      width: 25px;
-      height: 3px;
-      background: white;
-      border-radius: 2px;
-    }
-
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger div { width: 25px; height: 3px; background: white; border-radius: 2px; }
     @media (max-width: 768px) {
       .nav-links {
         position: fixed;
@@ -86,25 +53,17 @@
         transform: translateX(100%);
         transition: transform 0.3s ease;
       }
-
-      .nav-links.active {
-        transform: translateX(0);
-      }
-
-      .nav-links li {
-        margin-bottom: 1rem;
-      }
-
-      .hamburger {
-        display: flex;
-      }
+      .nav-links.active { transform: translateX(0); }
+      .nav-links li { margin-bottom: 1rem; }
+      .hamburger { display: flex; }
     }
 
-    /* ====== Main Page Styles ====== */
+    /* ====== Main Content ====== */
     main {
       padding: 2rem;
       max-width: 1000px;
       margin: auto;
+      flex: 1;
     }
 
     h2 {
@@ -122,6 +81,8 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
 
+    .category h3 { color: #003366; }
+
     .file-item {
       display: flex;
       justify-content: space-between;
@@ -129,10 +90,7 @@
       padding: 0.5rem 0;
       border-bottom: 1px solid #eee;
     }
-
-    .file-item:last-child {
-      border-bottom: none;
-    }
+    .file-item:last-child { border-bottom: none; }
 
     .file-item a.download {
       background: #004080;
@@ -148,6 +106,7 @@
       padding: 2rem;
       border-radius: 8px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
     }
 
     .upload-form label {
@@ -177,19 +136,24 @@
       cursor: pointer;
     }
 
-    .upload-form button:hover {
+    .upload-form button:hover { background: #003366; }
+
+    /* ====== Footer ====== */
+    footer {
+      text-align: center;
+      padding: 15px;
       background: #003366;
+      color: white;
+      margin-top: auto;
     }
   </style>
 </head>
 <body>
 
   <!-- ====== Navigation ====== -->
-    <nav>
+  <nav>
     <div class="nav-left">
-      <div class="nav-logo">
-        <img src="logo.png" alt="Logo" />
-      </div>
+      <div class="nav-logo"><img src="logo.png" alt="Logo" /></div>
       <div class="nav-title">CampusConnect</div>
     </div>
     <ul class="nav-links">
@@ -202,14 +166,11 @@
       <li><a href="login.html">Login</a></li>
       <li><a href="register.html">Register</a></li>
     </ul>
-    <div class="hamburger" id="hamburger">
-      <div></div><div></div><div></div>
-    </div>
+    <div class="hamburger" id="hamburger"><div></div><div></div><div></div></div>
   </nav>
 
   <!-- ====== Main Content ====== -->
   <main>
-
     <h2>Resources by Subject</h2>
 
     <div class="category">
@@ -233,9 +194,8 @@
     </div>
 
     <h2>Upload a File</h2>
-
     <div class="upload-form">
-      <form>
+      <form id="uploadForm">
         <label for="subject">Subject</label>
         <input type="text" id="subject" name="subject" placeholder="e.g. Web Development" required />
 
@@ -245,18 +205,32 @@
         <button type="submit">Upload Resource</button>
       </form>
     </div>
-
   </main>
 
-  <!-- ====== JS (Hamburger Menu) ====== -->
+  <!-- ====== Footer ====== -->
+  <footer>
+    <p>&copy; 2025 CampusConnect. All rights reserved.</p>
+  </footer>
+
+  <!-- ====== JS ====== -->
   <script>
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
 
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
+    // Handle file upload (local preview only)
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const subject = document.getElementById('subject').value.trim();
+      const fileInput = document.getElementById('file');
+      const fileName = fileInput.files[0]?.name;
+
+      if (subject && fileName) {
+        alert(`File "${fileName}" uploaded to "${subject}" category (simulated).`);
+        fileInput.value = '';
+        this.reset();
+      }
     });
   </script>
-
 </body>
 </html>
