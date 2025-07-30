@@ -5,24 +5,17 @@
   <title>CampusConnect - Login</title>
   <style>
     /* ====== Base Styles ====== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: Arial, sans-serif;
       background: #e1e9f8;
-      margin: 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
       min-height: 100vh;
     }
 
-    a {
-      text-decoration: none;
-      color: white;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
     /* ====== Navbar ====== */
     nav {
@@ -38,38 +31,17 @@
       top: 0;
       z-index: 1000;
     }
-
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .nav-logo img {
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-    }
-
-    .nav-title {
-      font-weight: bold;
-      font-size: 1.5rem;
-      letter-spacing: 0.5px;
-    }
-
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .nav-logo img { height: 40px; width: 40px; border-radius: 50%; }
+    .nav-title { font-weight: bold; font-size: 1.5rem; letter-spacing: 0.5px; }
     .nav-links {
       display: flex;
       gap: 1.5rem;
       list-style: none;
     }
-
-    .nav-links li {
-      font-weight: 600;
-    }
-
-    .nav-links a {
-      color: white;
-    }
+    .nav-links li { font-weight: 600; }
+    .nav-links a { color: white; }
+    .nav-links a:hover { text-decoration: underline; }
 
     /* ====== Hamburger (Mobile) ====== */
     .hamburger {
@@ -78,14 +50,12 @@
       gap: 5px;
       cursor: pointer;
     }
-
     .hamburger div {
       width: 25px;
       height: 3px;
       background: white;
       border-radius: 2px;
     }
-
     @media (max-width: 768px) {
       .nav-links {
         position: fixed;
@@ -99,18 +69,9 @@
         transform: translateX(100%);
         transition: transform 0.3s ease;
       }
-
-      .nav-links.active {
-        transform: translateX(0);
-      }
-
-      .nav-links li {
-        margin-bottom: 1rem;
-      }
-
-      .hamburger {
-        display: flex;
-      }
+      .nav-links.active { transform: translateX(0); }
+      .nav-links li { margin-bottom: 1rem; }
+      .hamburger { display: flex; }
     }
 
     /* ====== Login Form ====== */
@@ -120,17 +81,11 @@
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       width: 320px;
-      margin-top: 5rem;
+      margin: 5rem auto;
       text-align: center;
     }
-
-    .login-container h2 {
-      color: #004080;
-      margin-bottom: 1.5rem;
-    }
-
-    input[type="email"],
-    input[type="password"] {
+    .login-container h2 { color: #004080; margin-bottom: 1.5rem; }
+    input[type="email"], input[type="password"] {
       width: 100%;
       padding: 0.75rem;
       margin: 0.5rem 0 1rem 0;
@@ -138,7 +93,6 @@
       border-radius: 4px;
       font-size: 1rem;
     }
-
     button {
       width: 100%;
       background: #004080;
@@ -151,23 +105,18 @@
       font-weight: bold;
       transition: background 0.3s ease;
     }
+    button:hover { background: #003366; }
+    .register-link { margin-top: 1rem; font-size: 0.9rem; }
+    .register-link a { color: #004080; font-weight: bold; }
+    .register-link a:hover { text-decoration: underline; }
 
-    button:hover {
+    /* ====== Footer ====== */
+    footer {
+      text-align: center;
+      padding: 15px;
       background: #003366;
-    }
-
-    .register-link {
-      margin-top: 1rem;
-      font-size: 0.9rem;
-    }
-
-    .register-link a {
-      color: #004080;
-      font-weight: bold;
-    }
-
-    .register-link a:hover {
-      text-decoration: underline;
+      color: white;
+      margin-top: auto;
     }
   </style>
 </head>
@@ -175,7 +124,7 @@
 <body>
 
   <!-- ====== Navigation Bar ====== -->
-    <nav>
+  <nav>
     <div class="nav-left">
       <div class="nav-logo">
         <img src="logo.png" alt="Logo" />
@@ -210,11 +159,15 @@
     </div>
   </div>
 
+  <!-- ====== Footer ====== -->
+  <footer>
+    <p>&copy; 2025 CampusConnect. All rights reserved.</p>
+  </footer>
+
   <!-- ====== JavaScript ====== -->
   <script>
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.querySelector('.nav-links');
-
     hamburger.addEventListener('click', () => {
       navLinks.classList.toggle('active');
     });
