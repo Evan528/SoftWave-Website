@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>CampusConnect - Support Ticket</title>
   <style>
     /* ====== Base Layout ====== */
@@ -10,16 +11,13 @@
       background: #f4f6fa;
       margin: 0;
       padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
-    a {
-      color: white;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
+    a { color: white; text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
     /* ====== Navbar ====== */
     nav {
@@ -30,57 +28,19 @@
       align-items: center;
       padding: 0 2rem;
       height: 70px;
-      width: 100%;
       position: sticky;
       top: 0;
       z-index: 1000;
     }
+    .nav-left { display: flex; align-items: center; gap: 1rem; }
+    .nav-logo img { height: 40px; width: 40px; border-radius: 50%; }
+    .nav-title { font-weight: bold; font-size: 1.5rem; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links li { font-weight: 600; }
 
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .nav-logo img {
-      height: 40px;
-      width: 40px;
-      border-radius: 50%;
-    }
-
-    .nav-title {
-      font-weight: bold;
-      font-size: 1.5rem;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-    }
-
-    .nav-links li {
-      font-weight: 600;
-    }
-
-    .nav-links a {
-      color: white;
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-    }
-
-    .hamburger div {
-      width: 25px;
-      height: 3px;
-      background: white;
-      border-radius: 2px;
-    }
-
+    /* ====== Hamburger (Mobile) ====== */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger div { width: 25px; height: 3px; background: white; border-radius: 2px; }
     @media (max-width: 768px) {
       .nav-links {
         position: fixed;
@@ -94,18 +54,9 @@
         transform: translateX(100%);
         transition: transform 0.3s ease;
       }
-
-      .nav-links.active {
-        transform: translateX(0);
-      }
-
-      .nav-links li {
-        margin-bottom: 1rem;
-      }
-
-      .hamburger {
-        display: flex;
-      }
+      .nav-links.active { transform: translateX(0); }
+      .nav-links li { margin-bottom: 1rem; }
+      .hamburger { display: flex; }
     }
 
     /* ====== Ticket Form ====== */
@@ -160,9 +111,28 @@
       font-weight: bold;
       transition: background 0.3s ease;
     }
+    button:hover { background: #003366; }
 
-    button:hover {
+    /* ====== Confirmation Message ====== */
+    .confirmation {
+      display: none;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #dff0d8;
+      color: #3c763d;
+      border: 1px solid #d6e9c6;
+      border-radius: 4px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    /* ====== Footer ====== */
+    footer {
+      text-align: center;
+      padding: 15px;
       background: #003366;
+      color: white;
+      margin-top: auto;
     }
   </style>
 </head>
@@ -171,9 +141,7 @@
   <!-- ====== Navigation Bar ====== -->
   <nav>
     <div class="nav-left">
-      <div class="nav-logo">
-        <img src="logo.png" alt="Logo" />
-      </div>
+      <div class="nav-logo"><img src="logo.png" alt="Logo" /></div>
       <div class="nav-title">CampusConnect</div>
     </div>
     <ul class="nav-links">
@@ -186,15 +154,13 @@
       <li><a href="login.html">Login</a></li>
       <li><a href="register.html">Register</a></li>
     </ul>
-    <div class="hamburger" id="hamburger">
-      <div></div><div></div><div></div>
-    </div>
+    <div class="hamburger" id="hamburger"><div></div><div></div><div></div></div>
   </nav>
 
   <!-- ====== Ticket Submission Form ====== -->
   <div class="ticket-container">
     <h2>Submit a Support Ticket</h2>
-    <form>
+    <form id="ticketForm">
       <label for="name">Full Name</label>
       <input type="text" id="name" name="name" required />
 
@@ -215,15 +181,25 @@
 
       <button type="submit">Submit Ticket</button>
     </form>
+    <div class="confirmation" id="confirmationMsg">Your ticket has been submitted. We’ll get back to you shortly!</div>
   </div>
 
-  <!-- ====== Hamburger Menu JS ====== -->
+  <!-- ====== Footer ====== -->
+  <footer>
+    <p>&copy; 2025 CampusConnect. All rights reserved.</p>
+  </footer>
+
+  <!-- ====== JavaScript ====== -->
   <script>
     const hamburger = document.getElementById('hamburger');
     const navLinks = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => navLinks.classList.toggle('active'));
 
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
+    // Ticket form confirmation (no backend yet)
+    document.getElementById('ticketForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('confirmationMsg').style.display = 'block';
+      this.reset();
     });
   </script>
 
